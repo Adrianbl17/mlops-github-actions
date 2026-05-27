@@ -31,7 +31,7 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: .
-          push: false
+          push: true
           tags: |
             ghcr.io/adrianbl17/hello-world-nginx:${{ github.ref_name }}
             ghcr.io/adrianbl17/hello-world-nginx:${{ github.sha }}
