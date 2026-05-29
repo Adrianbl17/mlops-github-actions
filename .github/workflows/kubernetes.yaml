@@ -1,0 +1,32 @@
+name: Kubernetes Deploy
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Apply pod to Kubernetes
+        run: |
+          kubectl apply -f - << EOF
+          apiVersion: v1
+          kind: Pod
+          metadata:
+            name: mypod-${{ github.run_id }}
+            namespace: howest-fastapi
+            labels:
+              name: mypod
+          spec:
+            containers:
+            - name: mypod
+              image: rancher/hello-world
+          EOF
+
+      - name: Check pods
+        run: kubectl get pods -n howest-fastapi
