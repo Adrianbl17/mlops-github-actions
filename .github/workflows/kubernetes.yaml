@@ -16,7 +16,7 @@ jobs:
         run: |
           $content = Get-Content pod.yaml -Raw
           $content = $content -replace '{ID}', '${{ github.run_id }}'
-          $content | kubectl apply -f - --validate=false --kubeconfig $env:USERPROFILE\.kube\config
+          $content | kubectl apply -f - --validate=false --kubeconfig C:\Users\adria\.kube\config
 
       - name: Check pods
         run: kubectl get pods -n howest-fastapi
