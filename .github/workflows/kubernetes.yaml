@@ -19,4 +19,4 @@ jobs:
           $content | kubectl apply -f - --validate=false --kubeconfig C:\Users\adria\.kube\config
 
       - name: Check pods
-        run: kubectl get pods -n howest-fastapi
+        run: kubectl get pods -n howest-fastapi --kubeconfig C:\Users\adria\.kube\config
