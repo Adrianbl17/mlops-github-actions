@@ -27,6 +27,9 @@ jobs:
       - name: Rollout deployment
         run: kubectl rollout restart deployment/nginx -n howest-fastapi --kubeconfig C:\Users\adria\.kube\config
 
+      - name: Add Helm repo
+        run: helm repo add howest https://howest-mct.github.io/helm-demo
+
       - name: Helm install
         run: helm upgrade --install nginx-helm howest/example-v2 -n howest-fastapi --kubeconfig C:\Users\adria\.kube\config
 
