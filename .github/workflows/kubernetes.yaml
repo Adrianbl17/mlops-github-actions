@@ -8,9 +8,31 @@ on:
 jobs:
   deploy:
     runs-on: self-hosted
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/adrianbl17/hello-world-nginx:latest
+            ghcr.io/adrianbl17/hello-world-nginx:${{ github.sha }}
 
       - name: Apply pod to Kubernetes
         run: |
